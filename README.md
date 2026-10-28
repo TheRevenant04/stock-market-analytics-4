@@ -1,19 +1,17 @@
-# Stock Market Analytics Notes
+# Stock Market Analytics
 
-Personal notes and results from exploring stock-market prediction and trading simulations.
+This project explores how to turn historical stock-market data into testable, risk-aware trading decisions. It focuses on predicting whether a stock will grow over the next 30 days, then evaluating whether those predictions could support a practical strategy after accounting for trade frequency, required capital, and transaction fees.
 
-## Results
+The analysis compares a Random Forest classifier and decision-tree models, tests how removing high-cardinality categorical features affects performance, and evaluates probability thresholds against both return and trading-efficiency goals. The aim is to distinguish a useful prediction model from a strategy that is realistically manageable to operate.
 
-- **Reduced-feature Random Forest:** Removing ticker and month-of-week dummy variables reduced the feature count from 301 to 208. The `pred10` rule at probability threshold 0.55 produced a CAGR of approximately 1.128 in the simulation.
-- **Random Forest threshold comparison:** The 0.57 threshold averaged about 4.85 trades per day and was the strongest tested threshold below five average daily trades.
-- **Redefined growth target:** With the positive-growth label set to 1 when 30-day future growth exceeds 1.022, `pred5_clf_10` generated 7,337 trades in the test set.
+## Current findings
 
-These are simulation outputs, not investment advice or a guarantee of future performance.
+- Removing ticker and month-of-week dummy variables reduced the model feature count from 301 to 208. The Random Forest rule at a 0.55 probability threshold achieved a simulated CAGR of approximately 1.128.
+- Among the tested Random Forest thresholds averaging fewer than five trades per day, 0.57 had the strongest simulated CAGR, at approximately 1.092.
+- When a positive outcome was defined as 30-day growth above 1.022, the `pred5_clf_10` decision-tree predictor generated 7,337 test-set trades.
 
-## Strategy idea
+## Strategy direction
 
-Rank candidates by predicted probability and, using thresholds selected on validation data, trade only the top five each day. Allocate equally with position-size limits, keep some cash in reserve, account for fees, and use a predefined exit and risk limit. Evaluate with walk-forward testing before changing the rules.
+Rank stocks by predicted probability using thresholds selected on validation data, and trade at most the five highest-ranked candidates each day. Allocate capital equally with per-position limits, keep cash in reserve, include transaction fees, and define exit and loss limits in advance. Use walk-forward testing to assess whether the strategy remains robust over time.
 
-## Scope
-
-This repository contains original notes and summaries only. Course notebooks and datasets are not included.
+These figures are historical simulation results, not investment advice or a guarantee of future performance. This repository currently documents the project and its findings; it does not include the underlying market dataset or executable analysis notebooks.
